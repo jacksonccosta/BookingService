@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Action = Domain.Enums.Action;
 
 namespace Domain.Entities;
 
@@ -11,4 +12,17 @@ public class Booking
     private Status Status { get; set; }
 
     public Status CurrentStatus { get { return this.Status; } }
+
+    public void ChangeState(Action action)
+    {
+        this.Status = (this.Status, action) switch
+        {
+            (Status.Created, Action.Pay)        => Status.Paid,
+            (Status.Paid, Action.Finish)        => Status.Finished,
+            (Status.Paid, Action.Refound)       => Status.Refounded,
+            (Status.Created, Action.Cancel)     => Status.Canceled,
+            (Status.Canceled, Action.Reopen)    => Status.Created,
+            _ => this.Status//throw new InvalidOperationException($"Cannot perform action {action} from state {this.Status}")
+        };
+    }
 }
