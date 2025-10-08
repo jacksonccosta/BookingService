@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251008025612_AddValueObjectToGuest")]
+    partial class AddValueObjectToGuest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,12 +101,11 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Domain.Entities.Booking", b =>
@@ -149,32 +151,6 @@ namespace Data.Migrations
                         });
 
                     b.Navigation("DocumentId")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Room", b =>
-                {
-                    b.OwnsOne("Domain.ValueObjects.Price", "Price", b1 =>
-                        {
-                            b1.Property<int>("RoomId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Currency")
-                                .HasMaxLength(3)
-                                .HasColumnType("int");
-
-                            b1.Property<decimal>("Value")
-                                .HasColumnType("decimal(18,2)");
-
-                            b1.HasKey("RoomId");
-
-                            b1.ToTable("Rooms");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoomId");
-                        });
-
-                    b.Navigation("Price")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

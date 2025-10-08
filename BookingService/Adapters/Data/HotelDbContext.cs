@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Data.Configurations;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data;
@@ -12,5 +13,10 @@ public class HotelDbContext(DbContextOptions<HotelDbContext> options) : DbContex
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(HotelDbContext).Assembly);
+
+        modelBuilder.ApplyConfiguration(new GuestConfiguration());
+        modelBuilder.ApplyConfiguration(new RoomConfiguration());
+
     }
 }
