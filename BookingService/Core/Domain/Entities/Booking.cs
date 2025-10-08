@@ -30,4 +30,7 @@ public class Booking
             _ => this.Status//throw new InvalidOperationException($"Cannot perform action {action} from state {this.Status}")
         };
     }
+
+    public Room Room { get; set; }
+    public Guest Guest { get; set; }
 }

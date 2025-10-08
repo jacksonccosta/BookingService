@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ public class Room
     public string Name { get; set; }
     public int Level{ get; set; }
     public bool InMaintenance { get; set; }
-    
+    public Price Price { get; set; }
+
     public bool WasGuest 
     {
         //TODO: Implement logic to check if the room was ever booked by a guest
