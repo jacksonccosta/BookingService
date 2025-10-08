@@ -1,10 +1,19 @@
+using Application.Guest;
+using Application.Guest.Port;
 using Data;
+using Data.Guest;
+using Domain.Ports;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+
+#region IoC
+builder.Services.AddScoped<IGuestManager, GuestManager>();
+builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+#endregion
 
 var connectionString = builder.Configuration.GetConnectionString("SqlHotelManagement");
 builder.Services.AddDbContext<HotelDbContext>(options =>

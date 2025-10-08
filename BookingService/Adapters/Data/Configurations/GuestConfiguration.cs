@@ -1,12 +1,12 @@
-﻿using Domain.Entities;
+﻿using Entities = Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configurations;
 
-public class GuestConfiguration : IEntityTypeConfiguration<Guest>
+public class GuestConfiguration : IEntityTypeConfiguration<Entities.Guest>
 {
-    public void Configure(EntityTypeBuilder<Guest> builder)
+    public void Configure(EntityTypeBuilder<Entities.Guest> builder)
     {
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Name).IsRequired().HasMaxLength(100);
